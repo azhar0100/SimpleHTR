@@ -47,7 +47,7 @@ def processimage():
         print(img)
         processedimg = prep.process_img(img)
         # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        r = requests.post('http://infero:5001/inferimage',json={'img':(processedimg.tolist()),'shape':processedimg.shape})
+        r = requests.post('http://inference:5001/inferimage',json={'img':(processedimg.tolist()),'shape':processedimg.shape})
         # print(r.text)
         return r.text
     return

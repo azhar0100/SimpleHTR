@@ -7,14 +7,14 @@ RUN apt install libgl1-mesa-glx -y
 RUN apt-get install 'ffmpeg'\
     'libsm6'\
     'libxext6'  -y
-COPY requirementsprep.txt requirementsprep.txt
+COPY requirements.txt requirements.txt
 RUN pip install Pillow
 
-RUN pip3 install -r requirementsprep.txt
+RUN pip3 install -r requirements.txt
 
-COPY src/preprocessor.py ./
-COPY src/dataloader_iam.py ./
-COPY src/preprocessingservice.py ./
-
-CMD [ "python3", "preprocessingservice.py", "--host=0.0.0.0"]
+COPY . .
+RUN pip install Flask
+RUN pip install requests
+WORKDIR /app/src/
+CMD [ "python3", "inferenceservice.py", "--host=0.0.0.0"]
 
