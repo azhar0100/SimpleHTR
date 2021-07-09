@@ -1,0 +1,19 @@
+# syntax=docker/dockerfile:1
+FROM python:3.7-slim-buster
+WORKDIR /app
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update -y
+RUN apt install libgl1-mesa-glx -y
+RUN apt-get install 'ffmpeg'\
+    'libsm6'\
+    'libxext6'  -y
+COPY requirementsprep.txt requirementsprep.txt
+
+RUN pip3 install -r requirementsprep.txt
+
+COPY src/preprocessor.py ./
+COPY src/dataloader_iam.py ./
+COPY src/preprocessingservice.py ./
+
+CMD [ "python3", "preprocessingservice.py", "--host=0.0.0.0"]
+
